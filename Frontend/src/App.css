@@ -1,0 +1,198 @@
+* {
+    
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    background-color: #212121;
+    display: flex;
+}
+/* DARK */
+body.dark{
+    background: #1e1e1e;
+    color: white;
+}
+
+/* LIGHT */
+body.light{
+    background: #f5f5f5;
+    color: black;
+}
+/* LIGHT MODE */
+
+body.light .sidebar{
+    background: #ffffff;
+    color: black;
+}
+
+body.light .chatWindow{
+    background: #f5f5f5;
+}
+
+body.light .inputBox{
+    background: white;
+    border: 1px solid #ddd;
+}
+
+body.light .inputBox input{
+    color: black;
+}
+
+body.light .navbar{
+    color: black;
+}
+
+body.light .dropDown{
+    background: white;
+    border: 1px solid #ddd;
+}
+
+body.light .dropDownItem{
+    color: black;
+}
+
+body.light .dropDownItem:hover{
+    background: #f1f1f1;
+}
+
+/* LIGHT MODE TEXT FIX */
+
+body.light .sidebar{
+    color: black;
+}
+
+body.light .navbar{
+    color: black;
+}
+
+body.light .chat{
+    color: black;
+}
+
+body.light .info{
+    color: #555;
+}
+
+body.light .sign p{
+    color: black;
+}
+
+body.light .prevPrompt{
+    color: black;
+}
+
+body.light .dropDownItem{
+    color: black;
+}
+
+body.light .authBox{
+    background: white;
+}
+
+body.light .authBox h1{
+    color: black;
+}
+
+body.light .authBox p{
+    color: black;
+}
+
+body.light .authBox input{
+    color: black;
+    background: #f3f3f3;
+}
+
+body.light .inputBox input{
+    color: black;
+}
+
+body.light .inputBox input::placeholder{
+    color: #666;
+}
+
+body.light #submit{
+    color: black;
+}
+
+body.light .micIcon{
+    color: black;
+}
+/* LIGHT MODE FIX */
+
+.app.light{
+    background: #f5f5f5;
+    color: black;
+}
+
+/* REMOVE FADED LOOK */
+
+.app.light *{
+    opacity: 1 !important;
+}
+
+/* SIDEBAR */
+
+.app.light .sidebar{
+    background: white;
+    border-right: 1px solid #ddd;
+}
+
+/* TEXT */
+
+.app.light .sidebar,
+.app.light .navbar,
+.app.light .chatWindow,
+.app.light .info,
+.app.light .sign p,
+.app.light .prevPrompt,
+.app.light h1,
+.app.light h2,
+.app.light h3,
+.app.light p,
+.app.light span,
+.app.light div{
+    color: black !important;
+}
+
+/* INPUT */
+
+.app.light .inputBox{
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.app.light .inputBox input{
+    color: black !important;
+}
+
+.app.light .inputBox input::placeholder{
+    color: #666;
+}
+
+/* ICONS */
+
+.app.light #submit,
+.app.light .micIcon,
+.app.light .userIcon{
+    color: black !important;
+}
+
+/* DROPDOWN */
+
+.app.light .dropDown{
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.app.light .dropDownItem{
+    color: black !important;
+}
+
+.app.light .dropDownItem:hover{
+    background: #f1f1f1;
+}

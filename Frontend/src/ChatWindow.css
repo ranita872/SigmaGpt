@@ -1,0 +1,183 @@
+.chatWindow {
+    background-color: #212121;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+/* navbar */
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar span {
+    margin: 1rem 2rem;
+}
+
+.userIconDiv {
+    margin: 1rem 2rem;
+}
+
+.userIcon {
+    background-color: #339cff;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* chat input */
+.chatInput{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.inputBox{
+    width: 100%;
+    max-width: 720px;
+
+    background: #2f2f2f;
+
+    border: 1px solid #444;
+
+    border-radius: 30px;
+
+    padding: 14px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.inputBox input{
+    flex: 1;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    color: white;
+
+    font-size: 16px;
+}
+
+.inputBox input::placeholder{
+    color: #b3b3b3;
+}
+
+.inputActions{
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.micIcon{
+    color: #d1d1d1;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    transition: 0.2s;
+}
+
+.micIcon:hover{
+    color: white;
+}
+
+#submit{
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+#submit:hover{
+    transform: scale(1.08);
+}
+
+.info{
+    margin-top: 12px;
+
+    color: #9f9f9f;
+
+    font-size: 13px;
+
+    text-align: center;
+}
+.dropDown{
+    position: absolute;
+
+    top: 70px;
+    right: 25px;
+
+    width: 220px;
+
+    background: #2b2b2b;
+
+    border: 1px solid #3d3d3d;
+
+    border-radius: 14px;
+
+    padding: 8px 0;
+
+    z-index: 1000;
+
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+
+.dropDownItem{
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 18px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.dropDownItem:hover{
+    background: #3a3a3a;
+}
+
+.dropDownItem i{
+    width: 18px;
+
+    font-size: 15px;
+
+    color: #d4d4d4;
+}
