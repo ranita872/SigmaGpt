@@ -85,3 +85,10 @@ button:hover {
     background-color: rgba(180, 180, 180, 0.05);
     border-radius: 10px;
 }
+.dark .fa-pen-to-square{
+    color: #b0b0b0;
+}
+
+.light .fa-pen-to-square{
+    color: black;
+}
