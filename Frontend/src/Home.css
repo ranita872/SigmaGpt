@@ -1,0 +1,11 @@
+.homeCenter{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeCenter h1{
+    font-size: 2rem;
+    font-weight: 700;
+}

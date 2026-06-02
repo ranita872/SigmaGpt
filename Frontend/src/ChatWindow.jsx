@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { ScaleLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 function ChatWindow() {
 
@@ -30,6 +31,7 @@ function ChatWindow() {
     const [isOpen, setIsOpen] = useState(false);
 
     const dropdownRef = useRef();
+    const navigate = useNavigate();
     const toggleTheme = () => {
 
     setTheme(
@@ -42,7 +44,14 @@ function ChatWindow() {
     // GET AI REPLY
     const getReply = async () => {
 
-        if (!prompt.trim()) return;
+          const token = localStorage.getItem("token");
+
+    if (!token) {
+        navigate("/login");
+        return;
+    }
+
+    if (!prompt.trim()) return;
 
         setLoading(true);
 
@@ -154,6 +163,8 @@ function ChatWindow() {
         localStorage.removeItem("user");
 
         setUser(null);
+
+        navigate("/Home");
     };
 
     return (
@@ -235,6 +246,7 @@ function ChatWindow() {
 
         <input
             placeholder="Ask anything"
+            
             value={prompt}
             onChange={(e) =>
                 setPrompt(e.target.value)
@@ -268,43 +280,7 @@ function ChatWindow() {
                     See Cookie Preferences.
                 </p>
 </div>
-            {/* <div className="chatInput">
-
-                <div className="inputBox">
-
-                    <input
-                        placeholder="Ask anything"
-                        value={prompt}
-                        onChange={(e) =>
-                            setPrompt(e.target.value)
-                        }
-                        onKeyDown={(e) =>
-                            e.key === "Enter"
-                                ? getReply()
-                                : ""
-                        }
-                    />
-                <div className="inputActions">
-                    <div className="micIcon">
-                        <i className="fa-solid fa-microphone"></i>
-                    </div>
-                    <div
-                        id="submit"
-                        onClick={getReply}
-                    >
-                        <i className="fa-solid fa-paper-plane"></i>
-                    </div>
-                </div>
-
-                </div>
-
-                <p className="info">
-                    SigmaGPT can make mistakes.
-                    Check important info.
-                    See Cookie Preferences.
-                </p>
-
-            </div> */}
+            
 
         </div>
     );

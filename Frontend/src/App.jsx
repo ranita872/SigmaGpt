@@ -1,6 +1,7 @@
 import './App.css';
 import Sidebar from "./Sidebar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
+import Home from "./Home";
 import {MyContext} from "./MyContext.jsx";
 import { useState } from 'react';
 import {v1 as uuidv1} from "uuid";
@@ -59,16 +60,33 @@ useEffect(() => {
     <MyContext.Provider value={providerValues}>
 
       <Routes>
+        <Route path="/Home" element={<Home />} />
+        
+        
 
-        {/* LOGIN */}
-        <Route
+<Route path="/login" element={<Login />} />
+
+<Route path="/register" element={<Signup />} />
+
+<Route
+  path="/"
+  element={
+    
+      <>
+        <Sidebar />
+        <ChatWindow />
+      </>
+    
+  }
+/>
+        {/* <Route
           path="/login"
           element={
             user ? <Navigate to="/" /> : <Login />
           }
         />
 
-        {/* REGISTER */}
+        
         <Route
           path="/register"
           element={
@@ -76,7 +94,7 @@ useEffect(() => {
           }
         />
 
-        {/* HOME */}
+        
         <Route
           path="/"
           element={
@@ -89,7 +107,7 @@ useEffect(() => {
               <Navigate to="/login" />
             )
           }
-        />
+        /> */}
 
       </Routes>
 

@@ -60,14 +60,14 @@ function Login() {
 
                 <input
                     type="email"
-                    placeholder="Email"
+                    placeholder="eg. ABC@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
 
                 <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="eg. 123"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
