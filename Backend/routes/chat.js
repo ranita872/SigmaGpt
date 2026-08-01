@@ -1,6 +1,8 @@
 import express from "express";
 import Thread from "../models/Thread.js";
 import getOpenAIAPIResponse from "../utils/openai.js";
+import upload from "../middleware/upload.js";
+import analyzeImage from "../utils/imageAnalysis.js";
 
 const router = express.Router();
 
@@ -100,6 +102,32 @@ router.post("/chat", async(req, res) => {
         res.status(500).json({error: "something went wrong"});
     }
 });
+router.post(
+    "/image-analyze",
+    upload.single("image"),
+    async (req, res) => {
+        try {
+            console.log(req.body);
+            console.log(req.file);
+
+            const question =
+                req.body?.question ||
+                "Describe this image.";
+
+            const result = await analyzeImage(
+                req.file.path,
+                question
+            );
+
+            res.json({ reply: result });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                error: "Failed to analyze image"
+            });
+        }
+    }
+);
 
 
 export default router;

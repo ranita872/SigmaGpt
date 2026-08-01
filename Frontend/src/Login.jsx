@@ -18,7 +18,7 @@ function Login() {
         try {
 
             const res = await axios.post(
-                "https://sigmagpt-backend-hn7q.onrender.com/api/auth/login",
+                "http://localhost:8080/api/auth/login",
                 {
                     email,
                     password

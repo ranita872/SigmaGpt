@@ -16,7 +16,7 @@ function Signup() {
         try {
 
             const res = await axios.post(
-                "https://sigmagpt-backend-hn7q.onrender.com/api/auth/register",
+                "http://localhost:8080/api/auth/register",
                 {
                     name,
                     email,

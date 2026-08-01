@@ -29,9 +29,16 @@ function ChatWindow() {
     const [loading, setLoading] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
 
     const dropdownRef = useRef();
     const navigate = useNavigate();
+    const [isListening, setIsListening] = useState(false);
+    const recognitionRef = useRef(null);
+    const [showAttachMenu, setShowAttachMenu] = useState(false);
+    const [isImageReply, setIsImageReply] =
+    useState(false);
     const toggleTheme = () => {
 
     setTheme(
@@ -51,7 +58,7 @@ function ChatWindow() {
         return;
     }
 
-    if (!prompt.trim()) return;
+    if (!prompt.trim() && !image) return;
 
         setLoading(true);
 
@@ -64,21 +71,72 @@ function ChatWindow() {
             currThreadId
         );
 
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: prompt,
-                threadId: currThreadId
-            })
-        };
+        // const options = {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         message: prompt,
+        //         threadId: currThreadId
+        //     })
+        // };
+        if (image) {
+
+    const formData = new FormData();
+
+    formData.append(
+        "image",
+        image
+    );
+
+    formData.append(
+        "question",
+        prompt || "Describe this image."
+    );
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:8080/api/image-analyze",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+        //console.log(response);
+        const data =
+            await response.json();
+        //console.log(data);
+        setIsImageReply(true);
+        setReply(data.reply);
+
+        setImage(null);
+
+    } catch (err) {
+
+        console.log(err);
+    }
+
+    setLoading(false);
+
+    return;
+}
+const options = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        message: prompt,
+        threadId: currThreadId
+    })
+};
 
         try {
 
             const response = await fetch(
-                "https://sigmagpt-backend-hn7q.onrender.com/api/chat",
+                "http://localhost:8080/api/chat",
                 options
             );
 
@@ -100,26 +158,31 @@ function ChatWindow() {
     // APPEND CHAT
     useEffect(() => {
 
-        if (prompt && reply) {
+    if (!reply) return;
 
-            setPrevChats(prevChats => (
-                [
-                    ...prevChats,
-                    {
-                        role: "user",
-                        content: prompt
-                    },
-                    {
-                        role: "assistant",
-                        content: reply
-                    }
-                ]
-            ));
+    setPrevChats((prevChats) => [
+
+        ...prevChats,
+
+        {
+            role: "user",
+            content:
+                prompt ||
+                "📷 Uploaded an image",
+
+            image: imagePreview
+        },
+
+        {
+            role: "assistant",
+            content: reply
         }
+    ]);
 
-        setPrompt("");
+    setPrompt("");
+    setImage(null);
 
-    }, [reply]);
+}, [reply]);
 
     // OPEN / CLOSE DROPDOWN
     const handleProfileClick = () => {
@@ -166,6 +229,101 @@ function ChatWindow() {
 
         navigate("/Home");
     };
+    const startVoiceChat = () => {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Voice recognition not supported");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognitionRef.current = recognition;
+
+    setIsListening(true);
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+
+        const transcript =
+            event.results[0][0].transcript;
+
+        setPrompt(transcript);
+
+        sendVoiceMessage(transcript);
+    };
+
+    recognition.onend = () => {
+        setIsListening(false);
+    };
+};
+const sendVoiceMessage = async (message) => {
+
+    setLoading(true);
+
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message,
+            threadId: currThreadId
+        })
+    };
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:8080/api/chat",
+            options
+        );
+
+        // const res = await response.json();
+
+        // setReply(res.reply);
+        const res = await response.json();
+
+setIsImageReply(false);
+setReply(res.reply);
+
+    } catch(err) {
+
+        console.log(err);
+
+    }
+
+    setLoading(false);
+};
+useEffect(() => {
+
+    if (!reply || isImageReply) {
+        return;
+    }
+
+    const speech =
+        new SpeechSynthesisUtterance(reply);
+
+    speech.lang = "en-US";
+
+    speech.rate = 1;
+
+    speech.onend = () => {
+        startVoiceChat();
+    };
+
+    window.speechSynthesis.speak(speech);
+
+}, [reply, isImageReply]);
 
     return (
 
@@ -243,6 +401,16 @@ function ChatWindow() {
             <div className="chatInput">
 
     <div className="inputBox">
+        <div
+    className="plusIcon"
+    onClick={() =>
+        document
+            .getElementById("imageUpload")
+            .click()
+    }
+>
+    <i className="fa-solid fa-plus"></i>
+</div>
 
         <input
             placeholder="Ask anything"
@@ -257,11 +425,50 @@ function ChatWindow() {
                     : ""
             }
         />
+       
 
         <div className="inputActions">
+            <input
+            type="file"
+            id="imageUpload"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
 
-            <div className="micIcon">
-                <i className="fa-solid fa-microphone"></i>
+    const file = e.target.files[0];
+
+    setImage(file);
+
+    setImagePreview(
+        URL.createObjectURL(file)
+    );
+}}
+/>
+{
+    image && (
+        <img
+            src={URL.createObjectURL(image)}
+            alt="preview"
+            width="80"
+        />
+    )
+}
+{/* <div
+    className="plusIcon"
+    onClick={() =>
+        document
+            .getElementById("imageUpload")
+            .click()
+    }
+>
+    <i className="fa-solid fa-plus"></i>
+</div> */}
+            <div className="micIcon" onClick={startVoiceChat}>
+                <i className={
+        isListening
+            ? "fa-solid fa-microphone-lines"
+            : "fa-solid fa-microphone"
+    }></i>
             </div>
 
             <div
