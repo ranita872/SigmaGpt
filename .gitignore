@@ -3,3 +3,4 @@
 
 # Uploaded files
 Backend/uploads/
+!Backend/uploads/.gitkeep
