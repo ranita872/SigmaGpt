@@ -1,3 +1,4 @@
+import fs from "fs";
 import express from "express";
 import Thread from "../models/Thread.js";
 import getOpenAIAPIResponse from "../utils/openai.js";
@@ -109,6 +110,8 @@ router.post(
         try {
             console.log(req.body);
             console.log(req.file);
+            console.log("File Path:", req.file.path);
+            console.log("File Exists:", fs.existsSync(req.file.path));
 
             const question =
                 req.body?.question ||
