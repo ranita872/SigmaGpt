@@ -351,8 +351,6 @@ https://sigmagpt-backend-hn7q.onrender.com
 ### Ranita Dutta
 
 - GitHub: https://github.com/ranita872
-- LinkedIn: https://linkedin.com/in/ranita-dutta
-- LeetCode: https://leetcode.com/u/RanitaDutta/
 
 ---
 
